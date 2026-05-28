@@ -1,1049 +1,305 @@
-# README - Quy trình làm bài báo ứng dụng AI theo nhóm trên Git
-
-## 1. Mục tiêu của repository
-
-Repository này được sử dụng để quản lý quá trình học tập, nghiên cứu và viết bài báo theo nhóm trong các môn học.
-
-Mỗi nhóm sinh viên sẽ làm việc trên **một nhánh Git riêng**, dùng để:
-
-- Phác thảo ý tưởng đề tài.
-- Tìm và phân tích bài báo liên quan.
-- Thiết kế hệ thống hoặc ứng dụng có tích hợp AI.
-- Viết nội dung bài báo theo từng phần.
-- Cập nhật tiến độ thường xuyên.
-- Lưu minh chứng: tài liệu, hình ảnh, kiến trúc, kết quả thí nghiệm, bảng đánh giá.
-
-Nhánh `main` chỉ dùng để lưu:
-
-- Hướng dẫn chung.
-- Template viết bài.
-- Quy định đặt tên nhánh.
-- Quy trình làm việc.
-- Checklist đánh giá.
-- Tài liệu tham khảo chung.
-
-Các nhóm **không được viết trực tiếp lên nhánh `main`** nếu không được giảng viên cho phép.
+# KỲ 5 — READ & REPRODUCE  
+## Hướng dẫn sinh viên tự nghiên cứu khoa học trong ngành Software Engineering
 
 ---
 
-## 2. Mô hình tổ chức Git
+## 1. Mục tiêu của kỳ 5
 
-Repository gồm 2 loại nhánh chính:
+Kỳ 5 là giai đoạn **làm quen với nghiên cứu khoa học**. Sinh viên chưa cần tạo ra đóng góp nghiên cứu lớn, nhưng phải biết:
 
-```text
-main
-│
-├── SE1701_G01
-├── SE1701_G02
-├── SE1702_G01
-├── SE1702_G02
-├── AI1801_G01
-├── AI1801_G02
-└── ...
-```
+1. Đọc và hiểu một bài báo khoa học cơ bản.
+2. Xác định vấn đề mà bài báo giải quyết.
+3. Tái hiện lại một phần hệ thống, mô hình hoặc ý tưởng trong bài báo.
+4. Làm prototype nhỏ có thể chạy được.
+5. Viết báo cáo nghiên cứu ngắn theo cấu trúc khoa học.
 
-Trong đó:
+Mục tiêu cuối kỳ:
 
-- `main`: nhánh hướng dẫn chung.
-- Mỗi nhóm có một nhánh riêng.
-- Leader nhóm được cấp quyền quản lý nhánh của nhóm.
-- Thành viên trong nhóm commit nội dung vào nhánh nhóm.
-- Giảng viên theo dõi tiến độ qua lịch sử commit, pull request hoặc báo cáo tuần.
+> Sinh viên hiểu được một vấn đề nghiên cứu, đọc được bài báo liên quan, làm lại một phần giải pháp, và trình bày được kết quả bằng báo cáo + demo.
 
 ---
 
-## 3. Quy định đặt tên nhánh
+## 2. Tư duy chính của kỳ 5
 
-### 3.1. Cú pháp đặt tên
+Ở kỳ này, sinh viên không làm project theo kiểu “em làm một app”, mà phải học cách diễn đạt thành:
 
 ```text
-<MA_LOP>_G<SO_THU_TU_NHOM>
+Vấn đề là gì?
+Ai gặp vấn đề này?
+Bài báo trước đã giải quyết như thế nào?
+Em tái hiện lại phần nào?
+Kết quả chạy thử ra sao?
+Hạn chế còn lại là gì?
 ```
 
 Ví dụ:
 
-```text
-SE1701_G01
-SE1701_G02
-SE1702_G01
-AI1801_G01
-BDT301_G03
-```
-
-### 3.2. Quy tắc
-
-| Thành phần | Ý nghĩa | Ví dụ |
-|---|---|---|
-| `MA_LOP` | Mã lớp hoặc mã môn/lớp | `SE1701`, `AI1801`, `BDT301` |
-| `G` | Viết tắt của Group | `G` |
-| `SO_THU_TU_NHOM` | Số thứ tự nhóm, dùng 2 chữ số | `01`, `02`, `03` |
-
-### 3.3. Ví dụ đúng
-
-```text
-SE1701_G01
-SE1701_G02
-BDT301_G05
-AIE101_G03
-```
-
-### 3.4. Ví dụ không đúng
-
-```text
-Group1
-Nhom1
-SE1701_Nhom1
-SE1701_Group_1
-se1701_g1
-```
-
----
-
-## 4. Quy định phân quyền
-
-### 4.1. Giảng viên
-
-Giảng viên có quyền:
-
-- Quản lý repository.
-- Tạo hoặc duyệt nhánh nhóm.
-- Kiểm tra tiến độ.
-- Review nội dung.
-- Comment góp ý.
-- Merge nội dung tốt vào nhánh `main` nếu cần.
-
-### 4.2. Leader nhóm
-
-Leader nhóm có trách nhiệm:
-
-- Quản lý nhánh của nhóm.
-- Phân công công việc cho thành viên.
-- Kiểm tra chất lượng nội dung trước khi commit.
-- Đảm bảo nhóm cập nhật Git thường xuyên.
-- Tạo pull request nếu giảng viên yêu cầu.
-- Tổng hợp báo cáo tiến độ hằng tuần.
-
-### 4.3. Thành viên nhóm
-
-Thành viên nhóm có trách nhiệm:
-
-- Làm đúng phần được phân công.
-- Commit nội dung rõ ràng.
-- Không xóa file của thành viên khác nếu chưa thống nhất.
-- Ghi rõ nguồn tài liệu tham khảo.
-- Cập nhật tiến độ đúng hạn.
-
----
-
-## 5. Cách tạo nhánh nhóm
-
-Leader hoặc giảng viên tạo nhánh theo cú pháp:
-
-```bash
-git checkout main
-git pull origin main
-git checkout -b SE1701_G01
-git push -u origin SE1701_G01
-```
-
-Các thành viên clone repository:
-
-```bash
-git clone <repository-url>
-cd <repository-name>
-git checkout SE1701_G01
-```
-
-Cập nhật code/tài liệu mới nhất từ nhánh nhóm:
-
-```bash
-git pull origin SE1701_G01
-```
-
-Commit nội dung:
-
-```bash
-git add .
-git commit -m "docs: update research topic proposal"
-git push origin SE1701_G01
-```
-
----
-
-## 6. Quy định commit message
-
-Commit message nên viết rõ ràng theo cú pháp:
-
-```text
-<type>: <nội dung thay đổi>
-```
-
-### Loại commit thường dùng
-
-| Type | Ý nghĩa | Ví dụ |
-|---|---|---|
-| `docs` | Cập nhật tài liệu | `docs: add related work summary` |
-| `topic` | Cập nhật đề tài | `topic: refine research objectives` |
-| `review` | Thêm phân tích bài báo | `review: analyze five related papers` |
-| `method` | Cập nhật phương pháp | `method: add system architecture description` |
-| `experiment` | Cập nhật thí nghiệm | `experiment: add evaluation metrics` |
-| `result` | Cập nhật kết quả | `result: add baseline comparison table` |
-| `fix` | Sửa lỗi nội dung | `fix: correct citation format` |
-| `figure` | Thêm hình ảnh/sơ đồ | `figure: add system architecture diagram` |
-
-Ví dụ:
-
-```bash
-git commit -m "review: add literature matrix for AI-powered LMS"
-git commit -m "method: update RAG-based system architecture"
-git commit -m "result: add expert evaluation table"
-```
-
----
-
-## 7. Cấu trúc thư mục đề xuất cho mỗi nhánh nhóm
-
-Mỗi nhóm nên tổ chức thư mục như sau:
-
-```text
-.
-├── README.md
-├── 01_topic_proposal/
-│   ├── topic_proposal.md
-│   └── topic_revision_log.md
-│
-├── 02_related_work/
-│   ├── search_keywords.md
-│   ├── paper_list.md
-│   ├── literature_review_matrix.md
-│   └── paper_summaries/
-│       ├── paper_01.md
-│       ├── paper_02.md
-│       └── paper_03.md
-│
-├── 03_problem_and_gap/
-│   ├── problem_statement.md
-│   ├── research_gap.md
-│   └── research_questions.md
-│
-├── 04_proposed_system/
-│   ├── system_overview.md
-│   ├── system_architecture.md
-│   ├── ai_model_integration.md
-│   ├── data_flow.md
-│   └── diagrams/
-│       ├── architecture.png
-│       └── workflow.png
-│
-├── 05_methodology/
-│   ├── methodology.md
-│   ├── dataset.md
-│   ├── baseline.md
-│   └── evaluation_metrics.md
-│
-├── 06_experiment_results/
-│   ├── experimental_setup.md
-│   ├── results.md
-│   ├── tables/
-│   └── figures/
-│
-├── 07_paper_draft/
-│   ├── paper_outline.md
-│   ├── abstract.md
-│   ├── introduction.md
-│   ├── related_work.md
-│   ├── methodology.md
-│   ├── results.md
-│   ├── discussion.md
-│   └── conclusion.md
-│
-├── 08_final_submission/
-│   ├── final_paper.docx
-│   ├── final_paper.pdf
-│   └── presentation.pptx
-│
-└── weekly_reports/
-    ├── week_01.md
-    ├── week_02.md
-    └── week_03.md
-```
-
----
-
-## 8. Quy trình làm bài báo ứng dụng AI theo từng bước
-
-## Bước 1: Chọn lĩnh vực ứng dụng
-
-Mỗi nhóm chọn một lĩnh vực cụ thể, ví dụ:
-
-- Giáo dục.
-- Quản lý học tập.
-- Quản lý đề tài sinh viên.
-- Nông nghiệp thông minh.
-- Quản lý kho.
-- Quản lý sự kiện.
-- Y tế.
-- Giao thông.
-- Tài chính.
-- Chăm sóc khách hàng.
-- Quản lý nhân sự.
-- Quản lý tài liệu.
-
-Kết quả cần tạo:
-
-```text
-01_topic_proposal/topic_proposal.md
-```
-
-Nội dung cần có:
-
-- Tên đề tài dự kiến.
-- Lĩnh vực ứng dụng.
-- Vấn đề thực tế.
-- Đối tượng người dùng.
-- Lý do cần tích hợp AI.
-- Model AI dự kiến sử dụng.
-- Kết quả mong muốn.
-
----
-
-## Bước 2: Tìm bài báo liên quan
-
-Mỗi nhóm cần tìm tối thiểu:
-
-- 5 bài báo liên quan trực tiếp.
-- 3 bài báo về model AI hoặc phương pháp AI.
-- 2 bài báo về domain ứng dụng.
-
-Nguồn tìm kiếm đề xuất:
-
-- Google Scholar.
-- IEEE Xplore.
-- ACM Digital Library.
-- SpringerLink.
-- ScienceDirect.
-- MDPI.
-- arXiv, nếu cần tham khảo kỹ thuật mới.
-- CEUR Workshop Proceedings.
-
-Từ khóa tìm kiếm mẫu:
-
-```text
-AI-powered management system conference paper
-machine learning based decision support system
-AI-based learning management system
-LLM-based academic advising system
-RAG-based decision support system
-AIoT smart agriculture management system
-machine learning inventory management system
-supervisor recommendation system
-research topic recommendation system
-```
-
-Kết quả cần tạo:
-
-```text
-02_related_work/search_keywords.md
-02_related_work/paper_list.md
-02_related_work/literature_review_matrix.md
-```
-
----
-
-## Bước 3: Đọc và tóm tắt từng bài báo
-
-Mỗi bài báo cần được tóm tắt theo mẫu:
-
-```markdown
-# Paper 01 Summary
-
-## Citation
-
-Tên bài:
-Tác giả:
-Năm:
-Nguồn:
-DOI/Link:
-
-## Problem
-
-Bài báo giải quyết vấn đề gì?
-
-## Method
-
-Bài báo dùng phương pháp/model/hệ thống nào?
-
-## Dataset
-
-Bài báo dùng dữ liệu gì?
-
-## Evaluation
-
-Bài báo đánh giá bằng metric nào?
-
-## Results
-
-Kết quả chính là gì?
-
-## Limitations
-
-Hạn chế của bài báo là gì?
-
-## Relevance to our topic
-
-Bài báo liên quan gì đến đề tài của nhóm?
-
-## Possible improvement
-
-Nhóm có thể cải tiến hoặc mở rộng điểm nào?
-```
-
-Lưu tại:
-
-```text
-02_related_work/paper_summaries/paper_01.md
-02_related_work/paper_summaries/paper_02.md
-...
-```
-
----
-
-## Bước 4: Tạo Literature Review Matrix
-
-Nhóm cần tổng hợp các bài báo thành bảng:
-
-```markdown
-| Paper | Domain | AI Model / Method | Dataset | Evaluation Metrics | Main Contribution | Limitation | Relevance |
-|---|---|---|---|---|---|---|---|
-| Paper 1 | Education | LLM, RAG | LMS data | Accuracy, expert rating | AI feedback system | Small dataset | High |
-| Paper 2 | Agriculture | Random Forest | Sensor data | F1-score | Disease detection | No explanation | Medium |
-```
-
-Lưu tại:
-
-```text
-02_related_work/literature_review_matrix.md
-```
-
-Mục tiêu của bảng này:
-
-- Biết các bài trước đã làm gì.
-- Biết model nào đã được dùng.
-- Biết dataset nào phù hợp.
-- Biết metric nào thường dùng.
-- Tìm ra gap để phát triển bài của nhóm.
-
----
-
-## Bước 5: Xác định vấn đề nghiên cứu và gap
-
-Nhóm cần trả lời:
-
-1. Vấn đề thực tế là gì?
-2. Vì sao vấn đề này quan trọng?
-3. Các bài trước đã giải quyết như thế nào?
-4. Các bài trước còn hạn chế gì?
-5. Nhóm sẽ cải tiến điểm nào?
-6. Đóng góp của nhóm là gì?
-
-Kết quả cần tạo:
-
-```text
-03_problem_and_gap/problem_statement.md
-03_problem_and_gap/research_gap.md
-03_problem_and_gap/research_questions.md
-```
-
-Ví dụ gap:
-
-> Existing AI-powered learning management systems mainly focus on quiz generation or chatbot support, while limited attention has been given to rubric-based feedback and supervisor recommendation in research topic registration workflows.
-
----
-
-## Bước 6: Xây dựng câu hỏi nghiên cứu
-
-Mỗi nhóm nên có 2 đến 4 câu hỏi nghiên cứu.
-
-Ví dụ:
-
-```text
-RQ1. How accurately can the proposed system detect duplicate or overlapping research topics?
-
-RQ2. How effectively can the AI model recommend suitable supervisors based on topic descriptions and supervisor profiles?
-
-RQ3. How useful is the LLM-generated feedback in improving student topic proposals?
-
-RQ4. How much time can the proposed system reduce compared with the traditional manual review process?
-```
-
-Lưu tại:
-
-```text
-03_problem_and_gap/research_questions.md
-```
-
----
-
-## Bước 7: Thiết kế hệ thống đề xuất
-
-Nhóm cần mô tả hệ thống ở mức kiến trúc.
-
-Nội dung cần có:
-
-- Người dùng chính.
-- Chức năng chính.
-- Dữ liệu đầu vào.
-- AI model sử dụng.
-- Luồng xử lý.
-- Kiến trúc frontend/backend/database/AI service.
-- Cách tích hợp model AI.
-- Output của hệ thống.
-
-Kết quả cần tạo:
-
-```text
-04_proposed_system/system_overview.md
-04_proposed_system/system_architecture.md
-04_proposed_system/ai_model_integration.md
-04_proposed_system/data_flow.md
-```
-
-Ví dụ kiến trúc:
-
-```text
-User Interface
-    |
-Backend API
-    |
-Database
-    |
-AI Service
-    |
-Model / Vector Database / External API
-```
-
----
-
-## Bước 8: Chọn model AI và mô tả cách tích hợp
-
-Nhóm cần nêu rõ:
-
-| Nội dung | Câu hỏi cần trả lời |
+| Làm project thông thường | Chuyển thành hướng nghiên cứu |
 |---|---|
-| Model dùng là gì? | LLM, CNN, LSTM, Random Forest, XGBoost, RAG, embedding model? |
-| Vì sao chọn model này? | Có phù hợp với bài toán không? |
-| Model lấy từ đâu? | Paper trước, HuggingFace, API, thư viện open-source? |
-| Input của model là gì? | Text, image, sensor data, log, bảng dữ liệu? |
-| Output của model là gì? | Nhãn phân loại, dự báo, khuyến nghị, phản hồi? |
-| Cách tích hợp vào app? | REST API, Python service, Node.js service, batch job? |
-| Có baseline không? | Rule-based, manual, TF-IDF, LLM-only? |
-
-Lưu tại:
-
-```text
-04_proposed_system/ai_model_integration.md
-```
+| Làm chatbot hỏi đáp PDF | Tái hiện hệ thống RAG đơn giản cho tài liệu môn học |
+| Làm dashboard IoT | Tái hiện hệ thống giám sát cảm biến và cảnh báo |
+| Làm app quản lý bài tập | Phân tích workflow hỗ trợ quản lý học tập nhóm |
+| Làm web quản lý sinh viên | Xây prototype hỗ trợ learning analytics cơ bản |
 
 ---
 
-## Bước 9: Thiết kế phương pháp đánh giá
+## 3. Kỹ thuật nghiên cứu cần học
 
-Một bài báo ứng dụng AI bắt buộc cần có đánh giá.
+### 3.1. Đọc bài báo khoa học
 
-Tùy bài toán, có thể dùng:
+Mỗi nhóm cần đọc tối thiểu **5 bài báo**.
 
-| Loại bài toán | Metric phù hợp |
+Khi đọc một bài báo, không cần dịch toàn bộ. Chỉ cần trả lời các câu hỏi:
+
+| Thành phần | Câu hỏi cần trả lời |
 |---|---|
-| Phân loại | Accuracy, Precision, Recall, F1-score |
-| Dự báo | MAE, RMSE, MAPE |
-| Gợi ý | Top-k Accuracy, Precision@k, Recall@k, NDCG |
-| RAG / LLM | Relevance, Faithfulness, Correctness, Expert Rating |
-| Hệ thống | Response Time, Throughput, Latency |
-| Người dùng | Survey, SUS, User Satisfaction |
-| So sánh quy trình | Time Saving, Error Reduction |
+| Title | Bài này nói về vấn đề gì? |
+| Abstract | Mục tiêu, phương pháp, kết quả chính là gì? |
+| Introduction | Vì sao vấn đề này quan trọng? |
+| Related Work | Các hướng trước đó là gì? |
+| Method | Tác giả làm bằng cách nào? |
+| Experiment | Tác giả kiểm tra bằng dữ liệu/metric gì? |
+| Result | Kết quả tốt ở điểm nào? |
+| Limitation | Bài còn hạn chế gì? |
 
-Kết quả cần tạo:
+### 3.2. Tái hiện ý tưởng
 
-```text
-05_methodology/evaluation_metrics.md
-05_methodology/baseline.md
-05_methodology/dataset.md
-```
+Kỳ 5 chỉ cần tái hiện một phần nhỏ. Ví dụ:
 
----
-
-## Bước 10: Xây dựng baseline
-
-Baseline là phương pháp dùng để so sánh với hệ thống đề xuất.
-
-Ví dụ:
-
-| Bài toán | Baseline |
+| Loại bài báo | Phần có thể tái hiện |
 |---|---|
-| Gợi ý giảng viên | Manual selection, TF-IDF + cosine similarity |
-| Phát hiện đề tài trùng | Keyword matching, TF-IDF |
-| Chatbot/RAG | LLM-only, keyword search |
-| Dự báo kho | Moving average, ARIMA |
-| Phân loại ảnh | Simple CNN, pretrained model without fine-tuning |
-| Nông nghiệp IoT | Rule-based threshold |
+| RAG/Chatbot | Upload PDF, chunking, embedding, hỏi đáp |
+| IoT | Đọc dữ liệu sensor giả lập, hiển thị dashboard |
+| AI grading | Chấm thử một bài bằng rubric đơn giản |
+| Bug classification | Phân loại bug bằng keyword hoặc ML đơn giản |
+| Learning analytics | Dashboard thống kê điểm, tiến độ, cảnh báo |
 
-Lưu tại:
+### 3.3. Viết báo cáo nghiên cứu ngắn
 
-```text
-05_methodology/baseline.md
-```
-
----
-
-## Bước 11: Viết bản nháp bài báo
-
-Nhóm viết bài theo cấu trúc:
+Báo cáo không cần dài, nhưng phải có cấu trúc nghiên cứu:
 
 ```text
-Title
-Abstract
-Keywords
 1. Introduction
-2. Related Work
-3. Proposed System / Methodology
-4. Experimental Setup
-5. Results
-6. Discussion
-7. Conclusion and Future Work
-References
-```
-
-Lưu tại:
-
-```text
-07_paper_draft/
-```
-
-Mỗi phần nên được viết trong file riêng trước, sau đó mới ghép thành bản hoàn chỉnh.
-
----
-
-## Bước 12: Cập nhật tiến độ hằng tuần
-
-Mỗi nhóm cần tạo báo cáo tuần:
-
-```text
-weekly_reports/week_01.md
-weekly_reports/week_02.md
-weekly_reports/week_03.md
-```
-
-Mẫu báo cáo tuần:
-
-```markdown
-# Weekly Report - Week 01
-
-## Group Information
-
-Class:
-Group:
-Leader:
-Members:
-
-## Tasks Completed This Week
-
-| Member | Task | Result |
-|---|---|---|
-| Nguyễn Văn A | Search papers | Found 5 papers |
-| Trần Văn B | Summarize paper 1-2 | Completed |
-| Lê Văn C | Draft topic proposal | Completed |
-
-## Git Commits
-
-| Commit ID | Message | Author |
-|---|---|---|
-| abc123 | docs: add paper list | Nguyen Van A |
-
-## Current Problems
-
-- Chưa tìm được dataset phù hợp.
-- Chưa xác định baseline.
-
-## Plan for Next Week
-
-- Hoàn thành literature review matrix.
-- Chọn model AI.
-- Viết problem statement.
-
-## Questions for Instructor
-
-- Dataset giả lập có được chấp nhận không?
-- Có thể dùng Gemini API thay cho local model không?
+2. Problem Statement
+3. Related Work Summary
+4. Reproduced Method
+5. Prototype Design
+6. Demo and Initial Result
+7. Limitation
+8. Conclusion
 ```
 
 ---
 
-## 9. Mẫu file Topic Proposal
+## 4. Input sinh viên cần chuẩn bị
 
-Tạo file:
-
-```text
-01_topic_proposal/topic_proposal.md
-```
-
-Nội dung mẫu:
-
-```markdown
-# Topic Proposal
-
-## 1. Group Information
-
-- Class:
-- Group:
-- Leader:
-- Members:
-
-## 2. Proposed Title
-
-English title:
-
-Vietnamese title:
-
-## 3. Application Domain
-
-Ví dụ: education, agriculture, warehouse management, healthcare, finance, student support.
-
-## 4. Problem Statement
-
-Mô tả vấn đề thực tế mà nhóm muốn giải quyết.
-
-## 5. Motivation
-
-Vì sao vấn đề này quan trọng?
-
-## 6. Target Users
-
-Ai là người dùng chính của hệ thống?
-
-## 7. Proposed AI Model / Method
-
-Nhóm dự kiến dùng model hoặc phương pháp AI nào?
-
-Ví dụ:
-
-- LLM
-- RAG
-- CNN
-- LSTM
-- XGBoost
-- Random Forest
-- Embedding model
-- Recommendation model
-
-## 8. System Features
-
-Các chức năng chính của hệ thống:
-
-1.
-2.
-3.
-4.
-
-## 9. Expected Contribution
-
-Đóng góp dự kiến:
-
-1.
-2.
-3.
-
-## 10. Evaluation Plan
-
-Nhóm sẽ đánh giá hệ thống như thế nào?
-
-- Dataset:
-- Baseline:
-- Metrics:
-- Expert evaluation:
-- User survey:
-
-## 11. Related Papers
-
-Liệt kê ít nhất 5 bài báo liên quan.
-
-| No | Title | Year | Source | Link / DOI |
-|---|---|---|---|---|
-| 1 | | | | |
-| 2 | | | | |
-| 3 | | | | |
-| 4 | | | | |
-| 5 | | | | |
-```
-
----
-
-## 10. Mẫu Literature Review Matrix
-
-Tạo file:
-
-```text
-02_related_work/literature_review_matrix.md
-```
-
-Nội dung mẫu:
-
-```markdown
-# Literature Review Matrix
-
-| No | Paper Title | Year | Venue | Domain | AI Method | Dataset | Metrics | Main Contribution | Limitation | Relevance to Our Topic |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | | | | | | | | | | |
-| 2 | | | | | | | | | | |
-| 3 | | | | | | | | | | |
-| 4 | | | | | | | | | | |
-| 5 | | | | | | | | | | |
-```
-
----
-
-## 11. Mẫu Research Questions
-
-Tạo file:
-
-```text
-03_problem_and_gap/research_questions.md
-```
-
-Nội dung mẫu:
-
-```markdown
-# Research Questions
-
-## Main Research Question
-
-How can an AI model be integrated into a domain-specific management system to improve decision support, recommendation, or automation?
-
-## Sub Research Questions
-
-RQ1.
-
-RQ2.
-
-RQ3.
-
-RQ4.
-```
-
----
-
-## 12. Mẫu System Architecture
-
-Tạo file:
-
-```text
-04_proposed_system/system_architecture.md
-```
-
-Nội dung mẫu:
-
-```markdown
-# System Architecture
-
-## 1. Overview
-
-Mô tả tổng quan hệ thống.
-
-## 2. Main Components
-
-| Component | Description |
+| Input | Yêu cầu |
 |---|---|
-| Frontend | Giao diện người dùng |
-| Backend API | Xử lý nghiệp vụ |
-| Database | Lưu dữ liệu hệ thống |
-| AI Service | Chạy model AI hoặc gọi API model |
-| Vector Database | Lưu embedding nếu dùng RAG |
-| External Services | API hoặc công cụ bên ngoài |
-
-## 3. Architecture Diagram
-
-Chèn hình kiến trúc tại đây.
-
-## 4. Data Flow
-
-1. User nhập dữ liệu.
-2. Backend lưu dữ liệu.
-3. Backend gửi dữ liệu đến AI Service.
-4. AI Service xử lý bằng model.
-5. Kết quả trả về hệ thống.
-6. User xem kết quả hoặc khuyến nghị.
-
-## 5. AI Integration
-
-Mô tả model AI được tích hợp ở bước nào trong hệ thống.
-```
+| Chủ đề nghiên cứu | Do nhóm chọn trong danh sách gợi ý hoặc đề xuất riêng |
+| 3 bài báo liên quan | Ưu tiên bài có hệ thống, mô hình, ứng dụng rõ |
+| Dataset nhỏ | Có thể dùng dữ liệu giả lập, dữ liệu public, dữ liệu tự tạo |
+| Starter code | Có thể dùng framework web/API/notebook |
+| Template báo cáo | Theo mẫu của giảng viên |
+| GitHub repository | Mỗi nhóm có một nhánh riêng |
 
 ---
 
-## 13. Mẫu Evaluation Plan
+## 5. Output cuối kỳ
 
-Tạo file:
+Mỗi nhóm phải nộp:
+
+| Output | Mô tả |
+|---|---|
+| `problem_statement.md` | Mô tả vấn đề, người dùng, bối cảnh |
+| `literature_matrix.xlsx` hoặc `.md` | Bảng tổng hợp 3–5 bài báo |
+| `prototype/` | Source code chạy được |
+| `demo_video_link.md` | Link video demo 3–5 phút |
+| `mini_research_report.md` | Báo cáo 5–8 trang |
+| `reflection.md` | Nhóm tự đánh giá học được gì, hạn chế gì |
+
+---
+
+## 6. Chủ đề gợi ý cho kỳ 5
+
+### 6.1. AI for Education
+
+| Mã đề tài | Chủ đề | Mô tả |
+|---|---|---|
+| K5-EDU-01 | Chatbot hỏi đáp tài liệu môn học | Sinh viên upload PDF môn học, hệ thống trả lời câu hỏi |
+| K5-EDU-02 | Dashboard tiến độ học tập | Hiển thị điểm, deadline, task, cảnh báo trễ |
+| K5-EDU-03 | AI gợi ý tài liệu học | Gợi ý tài liệu theo chủ đề sinh viên yếu |
+| K5-EDU-04 | Phân loại feedback sinh viên | Phân loại feedback theo chủ đề/tích cực/tiêu cực |
+
+### 6.2. AI for Software Engineering
+
+| Mã đề tài | Chủ đề | Mô tả |
+|---|---|---|
+| K5-SE-01 | Phân loại bug đơn giản | Dùng keyword hoặc ML cơ bản để phân loại bug |
+| K5-SE-02 | Tool kiểm tra requirement | Phát hiện requirement thiếu actor, action, object |
+| K5-SE-03 | Sinh test case cơ bản | Dùng template hoặc LLM để sinh test case |
+| K5-SE-04 | Code complexity dashboard | Đọc source code và hiển thị complexity đơn giản |
+
+### 6.3. AIoT / Smart System
+
+| Mã đề tài | Chủ đề | Mô tả |
+|---|---|---|
+| K5-IOT-01 | Dashboard giám sát sensor | Hiển thị nhiệt độ, độ ẩm, cảnh báo |
+| K5-IOT-02 | Cảnh báo threshold | Nếu sensor vượt ngưỡng thì cảnh báo |
+| K5-IOT-03 | Smart farm mini | Theo dõi nhiệt độ, pH, độ ẩm giả lập |
+| K5-IOT-04 | Energy monitoring dashboard | Theo dõi điện năng tiêu thụ giả lập |
+
+### 6.4. RAG / Document AI
+
+| Mã đề tài | Chủ đề | Mô tả |
+|---|---|---|
+| K5-RAG-01 | RAG hỏi đáp quy chế | Hỏi đáp tài liệu quy chế/syllabus |
+| K5-RAG-02 | Tóm tắt PDF môn học | Upload PDF và tóm tắt nội dung |
+| K5-RAG-03 | Tìm kiếm semantic tài liệu | Tìm đoạn liên quan bằng embedding |
+| K5-RAG-04 | Hỏi đáp FAQ khoa/ngành | Tạo chatbot FAQ đơn giản |
+
+---
+
+## 7. Timeline 15 tuần
+
+| Tuần | Việc cần làm | Output |
+|---|---|---|
+| 1 | Giới thiệu nghiên cứu khoa học ứng dụng trong SE | Nhóm được tạo |
+| 2 | Chọn chủ đề và vai trò nhóm | `team_profile.md` |
+| 3 | Tìm 3 bài báo liên quan | Danh sách paper |
+| 4 | Đọc và tóm tắt bài báo 1 | `paper_1_summary.md` |
+| 5 | Đọc và tóm tắt bài báo 2–3 | `paper_2_summary.md`, `paper_3_summary.md` |
+| 6 | Làm literature matrix | `literature_matrix.md` |
+| 7 | Viết problem statement | `problem_statement.md` |
+| 8 | Thiết kế prototype | Architecture draft |
+| 9 | Cài đặt prototype lần 1 | Source code version 1 |
+| 10 | Cài đặt prototype lần 2 | Source code version 2 |
+| 11 | Chạy demo thử | Demo internal |
+| 12 | Ghi nhận kết quả ban đầu | `initial_result.md` |
+| 13 | Viết mini report | Draft report |
+| 14 | Peer review giữa các nhóm | Review comments |
+| 15 | Final demo và nộp | Full package |
+
+---
+
+## 8. Cấu trúc thư mục GitHub
 
 ```text
-05_methodology/evaluation_metrics.md
+K5_GROUP_<class>_<group_id>/
+├── README.md
+├── team_profile.md
+├── 01_problem/
+│   └── problem_statement.md
+├── 02_literature/
+│   ├── paper_1_summary.md
+│   ├── paper_2_summary.md
+│   ├── paper_3_summary.md
+│   └── literature_matrix.md
+├── 03_prototype/
+│   ├── architecture.md
+│   └── src/
+├── 04_result/
+│   └── initial_result.md
+├── 05_report/
+│   └── mini_research_report.md
+└── 06_demo/
+    └── demo_video_link.md
 ```
 
-Nội dung mẫu:
+---
+
+## 9. Template problem statement
 
 ```markdown
-# Evaluation Plan
+# Problem Statement
 
-## 1. Evaluation Objectives
+## 1. Background
+Mô tả bối cảnh của vấn đề.
 
-Mục tiêu đánh giá hệ thống là gì?
+## 2. Target Users
+Ai là người dùng chính?
 
-## 2. Dataset
+## 3. Problem
+Người dùng đang gặp khó khăn gì?
 
-Mô tả dữ liệu dùng để đánh giá.
+## 4. Existing Solutions
+Các bài báo/hệ thống trước đã làm gì?
 
-## 3. Baseline
+## 5. Limitation of Existing Solutions
+Các hướng trước còn hạn chế gì?
 
-Hệ thống hoặc phương pháp so sánh.
+## 6. Proposed Prototype
+Nhóm dự kiến tái hiện hoặc xây dựng prototype gì?
 
-## 4. Metrics
-
-| Metric | Meaning | Why Used |
-|---|---|---|
-| Accuracy | | |
-| F1-score | | |
-| Response Time | | |
-| Expert Rating | | |
-| User Satisfaction | | |
-
-## 5. Evaluation Procedure
-
-1.
-2.
-3.
-4.
-
-## 6. Expected Results
-
-Kết quả kỳ vọng.
+## 7. Expected Output
+Prototype sẽ nhận input gì và trả output gì?
 ```
 
 ---
 
-## 14. Quy định cập nhật Git hằng tuần
+## 10. Template literature matrix
 
-Mỗi nhóm phải cập nhật Git ít nhất:
-
-- 2 lần mỗi tuần.
-- Mỗi thành viên nên có commit riêng.
-- Commit phải có nội dung thật, không commit rỗng.
-- File cập nhật phải nằm đúng thư mục.
-- Không upload file không liên quan.
-
-### Checklist mỗi tuần
-
-| Tuần | Công việc chính | File cần cập nhật |
-|---|---|---|
-| Week 1 | Chọn đề tài, lập nhóm, tạo nhánh | `topic_proposal.md`, `week_01.md` |
-| Week 2 | Tìm bài báo liên quan | `paper_list.md`, `search_keywords.md`, `week_02.md` |
-| Week 3 | Tóm tắt bài báo | `paper_summaries/`, `week_03.md` |
-| Week 4 | Literature review matrix | `literature_review_matrix.md`, `week_04.md` |
-| Week 5 | Xác định gap và RQ | `research_gap.md`, `research_questions.md` |
-| Week 6 | Thiết kế hệ thống | `system_architecture.md`, `data_flow.md` |
-| Week 7 | Mô tả model AI và baseline | `ai_model_integration.md`, `baseline.md` |
-| Week 8 | Thiết kế evaluation | `evaluation_metrics.md`, `dataset.md` |
-| Week 9 | Viết Introduction và Related Work | `introduction.md`, `related_work.md` |
-| Week 10 | Viết Methodology | `methodology.md` |
-| Week 11 | Thực nghiệm và kết quả | `experimental_setup.md`, `results.md` |
-| Week 12 | Discussion và Conclusion | `discussion.md`, `conclusion.md` |
-| Week 13 | Ghép bản nháp hoàn chỉnh | `paper_outline.md`, full draft |
-| Week 14 | Review và chỉnh sửa | revision log |
-| Week 15 | Hoàn thiện bài | final paper |
-| Week 16 | Nộp bài và thuyết trình | final paper, slides |
+| Paper | Year | Problem | Method | Dataset | Metric | Result | Limitation | Ý tưởng nhóm học được |
+|---|---:|---|---|---|---|---|---|---|
+| Paper 1 | 2024 |  |  |  |  |  |  |  |
+| Paper 2 | 2023 |  |  |  |  |  |  |  |
+| Paper 3 | 2022 |  |  |  |  |  |  |  |
 
 ---
 
-## 15. Tiêu chí đánh giá nhóm
+## 11. Rubric đánh giá kỳ 5
 
-| Tiêu chí | Trọng số gợi ý |
+| Tiêu chí | Điểm |
+|---|---:|
+| Hiểu vấn đề và bài báo | 20 |
+| Literature matrix rõ ràng | 15 |
+| Problem statement hợp lý | 15 |
+| Prototype chạy được | 25 |
+| Demo rõ ràng | 10 |
+| Báo cáo có cấu trúc nghiên cứu | 15 |
+| Tổng | 100 |
+
+---
+
+## 12. Checklist trước khi nộp
+
+- [ ] Có ít nhất 3 bài báo liên quan.
+- [ ] Có literature matrix.
+- [ ] Có problem statement rõ.
+- [ ] Prototype chạy được.
+- [ ] Có README hướng dẫn chạy.
+- [ ] Có demo video.
+- [ ] Có báo cáo 5–8 trang.
+- [ ] Có nêu hạn chế trung thực.
+- [ ] Có mô tả hướng phát triển cho kỳ 6.
+
+---
+
+## 13. Chuẩn đầu ra kỳ 5
+
+Sau kỳ 5, nhóm cần đạt được năng lực:
+
+```text
+Đọc hiểu bài báo cơ bản
+Tóm tắt được vấn đề và phương pháp
+Tái hiện được một phần hệ thống
+Làm prototype chạy được
+Viết báo cáo nghiên cứu ngắn
+Nhận diện được hạn chế/gap ban đầu
+```
+
+---
+
+## 14. Điều kiện để nhóm được khuyến khích lên mức viết paper sớm
+
+Nhóm kỳ 5 có thể được chọn làm paper sớm nếu đạt các điều kiện:
+
+| Điều kiện | Mức yêu cầu |
 |---|---|
-| Chất lượng ý tưởng đề tài | 10% |
-| Chất lượng literature review | 15% |
-| Xác định gap và research questions | 15% |
-| Thiết kế hệ thống | 15% |
-| Tích hợp model AI hợp lý | 15% |
-| Evaluation plan và kết quả | 15% |
-| Chất lượng bài viết | 10% |
-| Cập nhật Git và làm việc nhóm | 5% |
+| Prototype | Chạy ổn định |
+| Dataset | Có dữ liệu thật hoặc dữ liệu tự thu thập tốt |
+| Related work | Từ 5 bài trở lên |
+| Kết quả | Có bảng đo thử ban đầu |
+| Đề tài | Có tính ứng dụng rõ |
+| Nhóm | Có khả năng viết và tiếp tục phát triển |
 
----
-
-## 16. Checklist trước khi nộp bài cuối
-
-Trước khi nộp, nhóm cần kiểm tra:
-
-- [ ] Tên đề tài rõ ràng.
-- [ ] Có ít nhất 5 bài báo liên quan.
-- [ ] Có literature review matrix.
-- [ ] Có problem statement.
-- [ ] Có research gap.
-- [ ] Có research questions.
-- [ ] Có kiến trúc hệ thống.
-- [ ] Có mô tả model AI.
-- [ ] Có baseline.
-- [ ] Có dataset hoặc dữ liệu giả lập hợp lý.
-- [ ] Có metric đánh giá.
-- [ ] Có kết quả thực nghiệm hoặc đánh giá chuyên gia.
-- [ ] Có discussion.
-- [ ] Có limitation.
-- [ ] Có future work.
-- [ ] Có references đúng định dạng.
-- [ ] Có commit history đầy đủ.
-- [ ] Có weekly reports.
-
----
-
-## 17. Lưu ý quan trọng
-
-Một bài báo ứng dụng AI không nên chỉ trình bày rằng nhóm đã làm một ứng dụng.
-
-Bài cần trả lời được:
-
-1. Vấn đề thực tế là gì?
-2. Vì sao cần AI?
-3. Model AI được chọn có phù hợp không?
-4. Hệ thống tích hợp AI như thế nào?
-5. Có dữ liệu để đánh giá không?
-6. Có baseline để so sánh không?
-7. Kết quả có tốt hơn cách làm cũ không?
-8. Hạn chế của hệ thống là gì?
-9. Có thể mở rộng nghiên cứu như thế nào?
-
----
-
-## 18. Câu định vị bài báo ứng dụng AI
-
-Các nhóm có thể sử dụng câu sau để định vị nghiên cứu:
-
-> This study does not aim to propose a new AI model from scratch. Instead, it investigates how an existing AI model can be integrated into a domain-specific management system and evaluates its effectiveness in improving decision support, recommendation, or automation in a real-world application context.
-
-Phiên bản tiếng Việt:
-
-> Nghiên cứu này không nhằm đề xuất một mô hình AI hoàn toàn mới, mà tập trung khảo sát cách tích hợp một mô hình AI hiện có vào hệ thống quản lý theo lĩnh vực cụ thể, đồng thời đánh giá hiệu quả của mô hình trong việc cải thiện hỗ trợ ra quyết định, gợi ý hoặc tự động hóa trong bối cảnh ứng dụng thực tế.
-
----
-
-## 19. Kết luận
-
-Repository này là nơi quản lý toàn bộ quá trình làm bài báo của các nhóm.
-
-Mỗi nhóm cần:
-
-- Làm việc trên nhánh riêng.
-- Cập nhật tiến độ thường xuyên.
-- Viết tài liệu theo từng bước.
-- Tìm bài báo liên quan có chất lượng.
-- Xác định gap rõ ràng.
-- Thiết kế hệ thống có tích hợp AI thật sự.
-- Có phương pháp đánh giá cụ thể.
-- Hoàn thiện bài báo theo cấu trúc học thuật.
-
-Mục tiêu cuối cùng là mỗi nhóm có thể tạo ra một bài báo mang tính ứng dụng, có hệ thống, có AI model, có đánh giá và có khả năng phát triển thành bài hội thảo.
+Nếu đạt, nhóm có thể chuyển sang hướng kỳ 6 nâng cao: thêm baseline, metric và experiment.
